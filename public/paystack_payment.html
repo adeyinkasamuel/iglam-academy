@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iGlam Academy Registration - Payment</title>
+    
+    <!-- Link to External Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="css/payment.css">
+</head>
+<body>
+    <div class="container active" id="step4">
+        
+        <!-- Back Button inside the container -->
+        <button class="back-button" onclick="goBackToLocationPage()">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+
+        <div class="logo">
+            <img src="img/logo.svg" alt="iGlam Academy Logo" class="logo">
+        </div>
+
+        <h1>Complete Your Payment</h1>
+
+        <!-- Glowing Card for Selected Courses Section -->
+        <div class="glow-card">
+            <div class="summary">
+                <p>Selected Courses: <span id="selectedCourses"></span></p>
+                <p>Registration Fee: R<span id="registrationFee">0</span> (Compulsory)</p>
+                <!-- Original Total Fee with Strikethrough -->
+                <p class="strikethrough">Original Total Fee: <span>R<span id="originalTotalDisplay">3500</span></span></p>
+                <p>Special Course Fee: <span>R<span id="totalFeeDisplay"></span></span></p>
+            </div>
+        </div>
+
+        <!-- Glowing Card for Payment Type -->
+        <div class="glow-card">
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" id="fullPaymentCheckbox" onchange="handleCheckboxChange()"> Full Payment
+                </label>
+                <label>
+                    <input type="checkbox" id="partialPaymentCheckbox" onchange="handleCheckboxChange()"> Partial Payment
+                </label>
+                <label>
+                    <input type="checkbox" id="registrationOnlyCheckbox" onchange="handleCheckboxChange()"> Registration Fee Only
+                </label>
+            </div>
+        </div>
+
+        <!-- Futuristic Payment Button -->
+        <button id="payButton" class="payment-button" onclick="handlePayment()">Pay Now</button>
+
+        <div class="secure-image">
+            <img src="img/secure.png" alt="Secure Payment">
+        </div>
+    </div>
+
+    <!-- Link to External JavaScript -->
+    <script src="js/payment.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
+    <!-- JavaScript Function for Back Button -->
+    <script>
+        function goBackToLocationPage() {
+            window.location.href = 'location.html'; // Change to the correct URL of your location page
+        }
+    </script>
+</body>
+</html>

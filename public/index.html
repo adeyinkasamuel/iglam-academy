@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iGlam Academy Registration - Courses</title>
+    
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="css/index.css">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <img src="img/8.png" alt="iGlam Academy Logo">
+        <h1>Select Your Courses</h1>
+        <div class="scroll-indicator" id="scrollIndicatorUp" onclick="scrollUp()">▲</div>
+        <div class="course-list" id="courseList">
+            <!-- All course cards included here -->
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="1" data-special="1" data-duration="1" data-course="Test Course" data-regfee="0">
+                <i class="fas fa-check-circle"></i><span>Test Course</span>
+                <div class="prices">
+                    <span class="original">R1</span>
+                    <span class="special">R1</span>
+                </div>
+                <img src="img/test_course.jpg" alt="Test Course">
+            </label>
+            
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="2500" data-special="1000" data-duration="3" data-course="Nail Tech" data-regfee="250">
+                <i class="fas fa-paint-brush"></i><span>Nail Tech</span>
+                <small class="course-discount-label">Part of R1000 short courses</small>
+                <div class="prices">
+                    <span class="original">R2500</span>
+                    <span class="special">R1000</span>
+                </div>
+                <img src="img/nailtech.jpg" alt="Nail Tech">
+            </label>
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="3000" data-special="1000" data-duration="3" data-course="Wig Installation" data-regfee="250">
+                <i class="fas fa-cut"></i><span>Wig Installation</span>
+                <small class="course-discount-label">Part of R1000 short courses</small>
+                <div class="prices">
+                    <span class="original">R3000</span>
+                    <span class="special">R1000</span>
+                </div>
+                <img src="img/wiginstallation.jpg" alt="Wig Installation">
+            </label>
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="3000" data-special="1000" data-duration="2" data-course="Pedicure and Manicure" data-regfee="250">
+                <i class="fas fa-hand-sparkles"></i><span>Pedicure and Manicure</span>
+                <small class="course-discount-label">Part of R1000 short courses</small>
+                <div class="prices">
+                    <span class="original">R3000</span>
+                    <span class="special">R1000</span>
+                </div>
+                <img src="img/pedicuremanicure.jpg" alt="Pedicure and Manicure">
+            </label>
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="3500" data-special="1000" data-duration="2" data-course="Eyelash Extension" data-regfee="250">
+                <i class="fas fa-eye"></i><span>Eyelash Extension</span>
+                <small class="course-discount-label">Part of R1000 short courses</small>
+                <div class="prices">
+                    <span class="original">R3500</span>
+                    <span class="special">R1000</span>
+                </div>
+                <img src="img/eyelashextension.jpg" alt="Eyelash Extension">
+            </label>
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="3000" data-special="1000" data-duration="4" data-course="Hair Dressing" data-regfee="250">
+                <i class="fas fa-cut"></i><span>Hair Dressing</span>
+                <small class="course-discount-label">Part of R1000 short courses</small>
+                <div class="prices">
+                    <span class="original">R3000</span>
+                    <span class="special">R1000</span>
+                </div>
+                <img src="img/hairdressing.jpg" alt="Hair Dressing">
+            </label>
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="3200" data-special="1000" data-duration="2" data-course="Eyebrow Tinting" data-regfee="250">
+                <i class="fas fa-tint"></i><span>Eyebrow Tinting</span>
+                <small class="course-discount-label">Part of R1000 short courses</small>
+                <div class="prices">
+                    <span class="original">R3200</span>
+                    <span class="special">R1000</span>
+                </div>
+                <img src="img/eyebrowtinting.jpg" alt="Eyebrow Tinting">
+            </label>
+            <!-- Keep the same logic for other short courses -->
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="3500" data-special="1500" data-duration="2" data-course="Barbing" data-regfee="250">
+                <i class="fas fa-cut"></i><span>Barbing</span>
+                <div class="prices">
+                    <span class="original">R3500</span>
+                    <span class="special">R1500</span>
+                </div>
+                <img src="img/barbing.jpg" alt="Barbing">
+            </label>
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="4500" data-special="1000" data-duration="3" data-course="Wig Making" data-regfee="250">
+                <i class="fas fa-cut"></i><span>Wig Making</span>
+                <small class="course-discount-label">Part of R1000 short courses</small>
+                <div class="prices">
+                    <span class="original">R4500</span>
+                    <span class="special">R1000</span>
+                </div>
+                <img src="img/wigmaking.jpg" alt="Wig Making">
+            </label>
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="6000" data-special="1000" data-duration="3" data-course="Make Up" data-regfee="250">
+                <i class="fas fa-brush"></i><span>Make Up</span>
+                <small class="course-discount-label">Part of R1000 short courses</small>
+                <div class="prices">
+                    <span class="original">R6000</span>
+                    <span class="special">R1000</span>
+                </div>
+                <img src="img/makeup.jpg" alt="Make Up">
+            </label>
+            <!-- Keep the remaining courses without labels, as they follow their own pricing -->
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="15000" data-special="7000" data-duration="35" data-course="Full Beauty Therapy" data-regfee="700">
+                <i class="fas fa-spa"></i><span>Full Beauty Therapy Course</span>
+                <div class="prices">
+                    <span class="original">R15000</span>
+                    <span class="special">R7000</span>
+                </div>
+                <img src="img/beautytherapy.jpg" alt="Full Beauty Therapy">
+            </label>
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="7500" data-special="2500" data-duration="2" data-course="Microblading" data-regfee="1000">
+                <i class="fas fa-brush"></i><span>Microblading</span>
+                <div class="prices">
+                    <span class="original">R7500</span>
+                    <span class="special">R2500</span>
+                </div>
+                <img src="img/microblading.jpg" alt="Microblading">
+            </label>
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="8500" data-special="3000" data-duration="3" data-course="Ombre" data-regfee="1000">
+                <i class="fas fa-cut"></i><span>Ombre</span>
+                <div class="prices">
+                    <span class="original">R8500</span>
+                    <span class="special">R3000</span>
+                </div>
+                <img src="img/ombre.jpg" alt="Ombre">
+            </label>
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="30000" data-special="10000" data-duration="20" data-course="Tattoo" data-regfee="2000">
+                               <i class="fas fa-cut"></i><span>Tattoo</span>
+                <div class="prices">
+                    <span class="original">R30000</span>
+                    <span class="special">R10000</span>
+                </div>
+                <img src="img/tattoo.jpg" alt="Tattoo">
+            </label>
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="10000" data-special="4500" data-duration="5" data-course="Piercings" data-regfee="1000">
+                <i class="fas fa-cut"></i><span>Piercings</span>
+                <div class="prices">
+                    <span class="original">R10000</span>
+                    <span class="special">R4500</span>
+                </div>
+                <img src="img/piercings.jpg" alt="Piercings">
+            </label>
+            <label class="course-card">
+                <input type="checkbox" class="course" data-fee="2800" data-special="1000" data-duration="3" data-course="Waxing" data-regfee="250">
+                <i class="fas fa-cut"></i><span>Waxing</span>
+                <small class="course-discount-label">Part of R1000 short courses</small>
+                <div class="prices">
+                    <span class="original">R2800</span>
+                    <span class="special">R1000</span>
+                </div>
+                <img src="img/waxing.jpg" alt="Waxing">
+            </label>
+        </div>
+
+        <div class="scroll-indicator" id="scrollIndicatorDown" onclick="scrollDown()">▼</div>
+        <div class="error-message" id="totalFeeError">Please select at least one course.</div>
+        <div class="summary">
+            <p>Total Fee: <span class="original-total">R<span id="originalTotal">0</span></span></p>
+            <p>Special Fee: R<span id="totalFee">0</span></p>
+            <p>Registration Fee: R<span id="registrationFee">0</span></p>
+            <p>Total Duration: <span id="totalDuration">0</span> days</p>
+        </div>
+
+        <!-- Proceed button for navigation to the next page (basic_info.html) -->
+        <div class="btn-container">
+            <button type="button" onclick="validateAndNext()">Proceed to Basic Info</button>
+        </div>
+        <div class="back-to-top" id="backToTop" onclick="scrollToTop()">▲</div>
+    </div>
+
+    <!-- Link to External JavaScript for index.js -->
+    <script src="js/index.js"></script>
+</body>
+</html>

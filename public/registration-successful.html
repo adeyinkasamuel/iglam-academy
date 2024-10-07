@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Successful - iGlam Academy</title>
+    
+    <!-- Link to External Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="css/payment.css">
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Logo Section -->
+        <div class="logo">
+            <img src="img/logo.svg" alt="iGlam Academy Logo" class="logo">
+        </div>
+
+        <h1>Registration Successful!</h1>
+
+        <!-- Thank You Card Section -->
+        <div class="glow-card">
+            <p>Thank you for completing your registration at iGlam Academy!</p>
+            <p>We have received your payment and are processing your registration for the selected courses:</p>
+
+            <div class="summary">
+                <p>Selected Courses: <span id="selectedCoursesDisplay"></span></p>
+                <p>Total Amount Paid: R<span id="totalPaid"></span></p>
+            </div>
+
+            <p>A confirmation email has been sent to <strong><span id="emailDisplay">user@example.com</span></strong>.</p>
+            <p>Please check your inbox (including the spam/junk folder) for further details about your course schedule and next steps.</p>
+        </div>
+
+        <!-- Back to Homepage Button -->
+        <a href="index.html" class="payment-button">Return to Homepage</a>
+
+        <div class="contact-info">
+            <p>If you have any questions, please contact us at <a href="mailto:info@iglam.co.za">info@iglam.co.za</a>.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript for Displaying Course and Payment Details -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Retrieve course and payment information from local storage
+            const selectedCourses = JSON.parse(localStorage.getItem('selectedCourses')) || [];
+            const email = localStorage.getItem('email') || 'user@example.com';
+            const totalPaid = parseFloat(localStorage.getItem('totalPaid')) || 0;
+
+            // Display the information on the page
+            document.getElementById('selectedCoursesDisplay').textContent = selectedCourses.map(course => course.course).join(', ');
+            document.getElementById('emailDisplay').textContent = email;
+            document.getElementById('totalPaid').textContent = totalPaid.toFixed(2);
+        });
+    </script>
+</body>
+</html>

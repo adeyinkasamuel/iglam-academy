@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iGlam Academy Registration - Program</title>
+    
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="css/program.css">
+</head>
+<body>
+    <div class="container">
+        <img src="img/8.png" alt="iGlam Academy Logo">
+        <h1>Choose Your Program</h1>
+        <div class="option" id="fullTime" onclick="selectOption('fullTime')">Full Time (9am - 3pm)</div>
+        <div class="option" id="partTime" onclick="selectOption('partTime')">Part Time (9am - 3pm, Weekend Included)</div>
+
+        <div class="error-message" id="programError">Please select a program.</div>
+
+        <input type="text" id="startDate" class="date-picker" placeholder="Select Your Course Start Date">
+
+        <div class="error-message" id="dateError">Please select a start date.</div>
+
+        <div class="btn-container">
+            <button type="button" class="back-button" onclick="goBack()">Back</button>
+            <button type="button" onclick="validateAndNext()">Next</button>
+        </div>
+    </div>
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    
+    <!-- Link to External JavaScript -->
+    <script src="js/program.js"></script>
+</body>
+</html>

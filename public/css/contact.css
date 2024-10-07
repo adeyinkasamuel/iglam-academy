@@ -1,0 +1,149 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #000000, #FFD700);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+/* Container Styling */
+.container {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    border: 2px solid #FFD700;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    text-align: center;
+    box-sizing: border-box;
+    display: block;
+}
+
+/* Center Image */
+.container img {
+    width: 120px;
+    margin-bottom: 20px;
+}
+
+/* Heading Styling */
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 3px solid #FFD700;
+    padding-bottom: 10px;
+}
+
+/* Input Fields */
+input[type="text"], input.phone-input {
+    width: calc(100% - 24px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #FFD700;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+input.half {
+    width: calc(48% - 6px); /* Reduced to prevent them from touching */
+    display: inline-block;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 10px;
+    display: none;
+}
+
+/* Button Styling */
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    width: 48%;
+    max-width: 200px;
+    text-align: center;
+}
+
+button:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.back-button {
+    background-color: #FFD700;
+    color: #000;
+    font-weight: 700;
+}
+
+.back-button:hover {
+    background-color: #e0b800;
+    color: #333;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 24px;
+    }
+    input[type="text"] {
+        font-size: 13px;
+        padding: 8px;
+    }
+    button {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    h1 {
+        font-size: 20px;
+        padding-bottom: 8px;
+    }
+    input[type="text"] {
+        font-size: 12px;
+        padding: 6px;
+    }
+    button {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}

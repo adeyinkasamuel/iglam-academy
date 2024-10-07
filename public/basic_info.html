@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iGlam Academy Registration - Basic Info</title>
+
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="css/basic_info.css">
+</head>
+<body>
+    <div class="container">
+        <img src="img/8.png" alt="iGlam Academy Logo">
+        <h1>Basic Information</h1>
+        
+        <input type="text" id="firstName" placeholder="First Name">
+        <div class="error-message" id="firstNameError">Please enter your first name.</div>
+
+        <input type="text" id="lastName" placeholder="Last Name">
+        <div class="error-message" id="lastNameError">Please enter your last name.</div>
+
+        <input type="email" id="email" placeholder="Email Address">
+        <div class="error-message" id="emailError">Please enter a valid email address.</div>
+
+        <select id="gender">
+            <option value="" disabled selected>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+        <div class="error-message" id="genderError">Please select your gender.</div>
+
+        <input type="checkbox" id="dataConsent">
+        <label for="dataConsent">I agree to the processing of personal data</label>
+        <div class="error-message" id="dataConsentError">You must agree to the processing of personal data.</div>
+
+        <div class="btn-container">
+            <button type="button" class="back-button" onclick="goBack()">Back</button>
+            <button type="button" onclick="validateAndNext()">Next</button>
+        </div>
+    </div>
+
+    <!-- Link to External JavaScript -->
+    <script src="js/basic_info.js"></script>
+</body>
+</html>

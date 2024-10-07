@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iGlam Academy Registration - Location</title>
+    
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="css/location.css">
+</head>
+<body>
+    <div class="container">
+        <img src="img/8.png" alt="iGlam Academy Logo">
+        <h1>Select Your Preferred Location</h1>
+        <div class="location-option" id="location1" onclick="selectLocation('location1')">Mall @ the Junction, Johannesburg South</div>
+        <div class="location-option" id="location2" onclick="selectLocation('location2')">Ontdekkerspark Florida, Roodepoort</div>
+
+        <div class="error-message" id="locationError">Please select a location.</div>
+
+        <div class="btn-container">
+            <button type="button" class="back-button" onclick="goBack()">Back</button>
+            <button type="button" onclick="goToCourses()">Back to Courses</button> <!-- Added this button for navigation to courses -->
+            <button type="button" onclick="validateAndNext()">Next</button>
+        </div>
+    </div>
+
+    <!-- Link to External JavaScript -->
+    <script src="js/location.js"></script>
+</body>
+</html>

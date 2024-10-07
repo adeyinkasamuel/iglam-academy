@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iGlam Academy Registration - Contact Information</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+    <div class="container">
+        <img src="img/8.png" alt="iGlam Academy Logo">
+        <h1>Tell Us How We Can Reach You</h1>
+        <input type="text" placeholder="Street Number and Name" id="streetName">
+        <div class="error-message" id="streetNameError">Please enter your street number and name.</div>
+        <input type="text" class="half" placeholder="Suburb" id="suburb">
+        <input type="text" class="half" placeholder="City/Town" id="city">
+        <div class="error-message" id="locationError">Please enter your suburb and city/town.</div>
+        <input type="text" placeholder="Postal Code" id="postalCode">
+        <div class="error-message" id="postalCodeError">Please enter your postal code.</div>
+        <input type="text" placeholder="123-456-7890" id="phone" class="phone-input" maxlength="12" oninput="formatPhoneNumber(this)">
+        <div class="error-message" id="phoneError">Please enter a valid phone number (e.g., 123-456-7890).</div>
+        <input type="text" placeholder="Emergency Contact Name" id="emergencyContactName">
+        <div class="error-message" id="emergencyContactNameError">Please enter your emergency contact's name.</div>
+        <input type="text" placeholder="123-456-7890" id="emergencyContactPhone" class="phone-input" maxlength="12" oninput="formatPhoneNumber(this)">
+        <div class="error-message" id="emergencyContactPhoneError">Please enter a valid emergency contact phone number (e.g., 123-456-7890).</div>
+        <div class="btn-container">
+            <button type="button" class="back-button" onclick="goBack()">Back</button>
+            <button type="button" onclick="validateStep2()">Next</button>
+        </div>
+    </div>
+
+    <!-- Link to External JavaScript -->
+    <script src="js/contact.js"></script>
+</body>
+</html>

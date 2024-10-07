@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iGlam Academy Registration - EFT Payment</title>
+    
+    <!-- Link to External Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="css/payment.css">
+</head>
+<body>
+    <div class="container active" id="step4">
+        
+        <!-- Back Button inside the container -->
+        <button class="back-button" onclick="goBackToLocationPage()">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+
+        <div class="logo">
+            <img src="img/logo.svg" alt="iGlam Academy Logo" class="logo">
+        </div>
+        <!-- Message alert box for displaying messages to the user -->
+        <div id="alertMessage" class="alert-message" style="display: none; color: red; margin: 10px 0;"></div>
+
+        <h1>Complete Your Payment via EFT</h1>
+
+        <!-- Glowing Card for Selected Courses Section -->
+        <div class="glow-card">
+            <div class="summary">
+                <p>Selected Courses: <span id="selectedCourses"></span></p>
+                <p>Registration Fee: R<span id="registrationFee">250</span> (Compulsory)</p>
+                <p class="strikethrough">Original Total Fee: R<span id="originalTotalDisplay">3500</span></p>
+                <p>Special Course Fee: R<span id="totalFeeDisplay">0</span></p>
+            </div>
+        </div>
+
+        <!-- Payment Options -->
+        <div class="glow-card">
+            <h3>Choose Your Payment Option:</h3>
+            <form>
+                <input type="checkbox" id="fullPaymentCheckbox" onchange="handleCheckboxChange()">
+                <label for="fullPaymentCheckbox">Full Payment (Registration Fee + Course Fee)</label><br>
+
+                <input type="checkbox" id="partialPaymentCheckbox" onchange="handleCheckboxChange()">
+                <label for="partialPaymentCheckbox">Partial Payment (50% of Course Fee + Registration Fee)</label><br>
+
+                <input type="checkbox" id="registrationOnlyCheckbox" onchange="handleCheckboxChange()">
+                <label for="registrationOnlyCheckbox">Registration Fee Only</label>
+            </form>
+        </div>
+
+        <!-- Payment Reference Form -->
+        <div class="glow-card">
+            <form id="paymentForm" action="http://127.0.0.1:3000/api/submit-eft-payment" method="POST" enctype="multipart/form-data" onsubmit="handlePaymentSubmission(event)">
+                <!-- Hidden fields for email and course -->
+                <input type="hidden" id="email" name="email" value="user@example.com"> <!-- Replace with dynamic data -->
+                <input type="hidden" id="course" name="course" value="Nail Tech"> <!-- Replace with dynamic data -->
+
+                <label for="reference">Your Payment Reference Number:</label>
+                <input type="text" id="reference" name="reference" required>
+
+                <label for="proof">Upload Proof of Payment (optional):</label>
+                <input type="file" id="proof" name="proof">
+
+                <button type="submit" id="payButton" class="payment-button">Submit Payment Details</button>
+            </form>
+        </div>
+
+        <div class="contact-info">
+            <p>If you have any questions, please contact us at <a href="mailto:info@iglam.co.za">info@iglam.co.za</a>.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript Function for Back Button -->
+    <script>
+        function goBackToLocationPage() {
+            window.location.href = 'location.html'; // Change to the correct URL of your location page
+        }
+    </script>
+
+    <!-- Link to External JavaScript File for Payment Handling -->
+    <script src="js/payment.js"></script>
+</body>
+</html>

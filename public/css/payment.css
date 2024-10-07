@@ -1,0 +1,222 @@
+/* Strikethrough style for Original Total Fee */
+.strikethrough {
+    text-decoration: line-through;
+    color: #888; /* Optional: Make it slightly grey to emphasize the strikethrough */
+}
+
+/* Base styles */
+body {
+    font-family: 'Orbitron', sans-serif;
+    background: #ffffff;
+    margin: 0;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    background: #f0f8ff;
+    border: 2px solid #1e90ff;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Back Button Styling */
+.back-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #1e90ff;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    transition: color 0.3s ease;
+}
+
+.back-button:hover {
+    color: #00bfff;
+}
+
+.logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+/* Glowing Card Style */
+.glow-card {
+    background: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(30, 144, 255, 0.5); /* Glow effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glow-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(30, 144, 255, 0.7);
+}
+
+.summary p {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #444;
+}
+
+/* EFT Payment Info */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    font-size: 16px;
+    padding: 10px 0;
+    color: #444;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+}
+
+ul li strong {
+    color: #1e90ff;
+}
+
+/* Payment Reference Form */
+form label {
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+form input[type="text"],
+form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+form input[type="file"] {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.alert-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+
+.payment-button {
+    background: linear-gradient(135deg, #1e90ff, #00bfff);
+    border: none;
+    color: #fff;
+    padding: 12px 25px;
+    font-size: 18px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-top: 20px;
+}
+
+.payment-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0, 191, 255, 0.5);
+}
+
+/* Contact Info */
+.contact-info {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.contact-info a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 22px;
+    }
+
+    .payment-button {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+
+    .summary p {
+        font-size: 14px;
+    }
+
+    .logo {
+        width: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+        max-width: 90%;
+    }
+
+    h1 {
+        font-size: 18px;
+    }
+
+    .payment-button {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+
+    .summary p {
+        font-size: 12px;
+    }
+
+    .logo {
+        width: 50px;
+    }
+
+    ul li {
+        font-size: 14px;
+    }
+}
