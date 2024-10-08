@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Verify Payments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button.reject {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Admin - Verify Payments</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Course</th>
+                <th>Reference</th>
+                <th>Amount Paid</th>
+                <th>Proof of Payment</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="paymentsTable">
+            <!-- Dynamic content will be injected here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch all pending payments from the backend
+        async function fetchPayments() {
+            const response = await fetch('http://127.0.0.1:3000/api/admin/payments');
+            const payments = await response.json();
+
+            const paymentsTable = document.getElementById('paymentsTable');
+            payments.forEach(payment => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${payment.email}</td>
+                    <td>${payment.course}</td>
+                    <td>${payment.paymentReference}</td>
+                    <td>R${payment.amountPaid}</td>
+                    <td><a href="/uploads/proof-of-payment/${payment.proofOfPayment}" target="_blank">View</a></td>
+                    <td>${payment.paymentStatus}</td>
+                    <td>
+                        <button onclick="verifyPayment(${payment.id}, 'verified')">Verify</button>
+                        <button class="reject" onclick="verifyPayment(${payment.id}, 'rejected')">Reject</button>
+                    </td>
+                `;
+                paymentsTable.appendChild(row);
+            });
+        }
+
+        // Function to verify or reject a payment
+        async function verifyPayment(id, status) {
+            const response = await fetch(`http://127.0.0.1:3000/api/admin/payment/${id}/status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status })
+            });
+
+            if (response.ok) {
+                alert('Payment status updated!');
+                location.reload(); // Refresh the page to reflect the changes
+            } else {
+                alert('Error updating payment status.');
+            }
+        }
+
+        // Fetch payments when the page loads
+        fetchPayments();
+    </script>
+
+</body>
+</html>
