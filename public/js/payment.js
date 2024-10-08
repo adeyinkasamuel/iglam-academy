@@ -48,6 +48,8 @@ function handleCheckboxChange() {
         selectedPaymentOption = '';
         document.getElementById('payButton').textContent = "Pay Now";
     }
+
+    console.log('Selected Payment Option:', selectedPaymentOption); // Log selected payment option
 }
 
 // Handle the payment process
@@ -66,6 +68,7 @@ function handlePayment() {
         paymentAmount = parseFloat(registrationFee);
     }
 
+    console.log('Payment Amount:', paymentAmount); // Log the payment amount for debugging
     processEFTPayment(paymentAmount);
 }
 
@@ -98,31 +101,43 @@ function handlePaymentSubmission(event) {
         const form = document.getElementById('paymentForm');
         const formData = new FormData(form);
 
+        console.log('Form Data:', formData); // Log FormData for debugging
+
         // Submit the form using Fetch API
         fetch('http://127.0.0.1:3000/api/payment/submit-eft-payment', {
             method: 'POST',
             body: formData
         })
         .then(response => {
+            // Log the full response to check its content
+            console.log('Full fetch response:', response);
+            
             if (!response.ok) {
+                // Log status and statusText to understand why it failed
+                console.log('Fetch failed with status:', response.status, response.statusText);
                 throw new Error('Network response was not ok');
             }
+
+            // Log the response type (to ensure it is JSON)
+            console.log('Fetch response type:', response.headers.get('content-type'));
+
             return response.json(); // Ensure this is the correct response type
         })
         .then(data => {
+            // Log the parsed response data
             console.log('Data received:', data);
-            if (data.success) {
-                displayMessage('Payment Details Submitted Successfully. Awaiting Verification.');
 
-                // Adding a 5-second wait before redirecting
-                setTimeout(() => {
-                    window.location.href = 'registration-successful.html';
-                }, 5000); // 5000 milliseconds = 5 seconds
+            // Check for success and trigger redirection
+            if (data.success) {
+                console.log('Redirection logic triggered');
+                window.location.href = 'registration-successful.html'; // Redirect immediately
             } else {
                 displayMessage('Error: ' + data.message);
             }
         })
         .catch(error => {
+            // Log any errors that occur during the fetch process
+            console.log('Error occurred during fetch:', error); 
             displayMessage('Error submitting payment details: ' + error.message);
         });
     } else {

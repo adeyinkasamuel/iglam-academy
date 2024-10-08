@@ -2,6 +2,7 @@ require('dotenv').config(); // Load environment variables
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors'); // Import the CORS package
 const registrationRoutes = require('./routes/registration');
 const eftPaymentRoutes = require('./routes/eftPayment'); // Import EFT payment route
 
@@ -10,6 +11,7 @@ const app = express();
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors()); // Enable CORS for all routes
 
 // Routes
 app.use('/api/registration', registrationRoutes); // Organized registration route

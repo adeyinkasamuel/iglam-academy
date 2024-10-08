@@ -55,7 +55,7 @@
 
         <!-- Payment Reference Form -->
         <div class="glow-card">
-            <form id="paymentForm" action="http://127.0.0.1:3000/api/submit-eft-payment" method="POST" enctype="multipart/form-data" onsubmit="handlePaymentSubmission(event)">
+            <form id="paymentForm" method="POST" enctype="multipart/form-data" onsubmit="handlePaymentSubmission(event)">
                 <!-- Hidden fields for email and course -->
                 <input type="hidden" id="email" name="email" value="user@example.com"> <!-- Replace with dynamic data -->
                 <input type="hidden" id="course" name="course" value="Nail Tech"> <!-- Replace with dynamic data -->
