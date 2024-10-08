@@ -99,7 +99,7 @@ function handlePaymentSubmission(event) {
         const formData = new FormData(form);
 
         // Submit the form using Fetch API
-        fetch('http://127.0.0.1:3000/api/submit-eft-payment', {
+        fetch('http://127.0.0.1:3000/api/payment/submit-eft-payment', {
             method: 'POST',
             body: formData
         })
@@ -107,9 +107,10 @@ function handlePaymentSubmission(event) {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
+            return response.json(); // Ensure this is the correct response type
         })
         .then(data => {
+            console.log('Data received:', data);
             if (data.success) {
                 displayMessage('Payment Details Submitted Successfully. Awaiting Verification.');
 

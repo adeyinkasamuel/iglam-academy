@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api', registrationRoutes);
-app.use('/api', eftPaymentRoutes); // Add EFT payment route
+app.use('/api/registration', registrationRoutes); // Organized registration route
+app.use('/api/payment', eftPaymentRoutes); // Organized payment route
 
 // Start the server
 const PORT = process.env.PORT || 3000;
