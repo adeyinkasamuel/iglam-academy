@@ -33,27 +33,30 @@ const upload = multer({
 
 // Handle EFT Payment Form Submission
 router.post('/submit-eft-payment', upload.single('proof'), (req, res) => {
-  const { reference, email = 'user@example.com', course = 'Nail Tech' } = req.body; // Pull email and course from form
-
+  const { reference, email = 'user@example.com', course = 'Nail Tech', amountPaid } = req.body; // Pull email, course, and amountPaid from form
   const proofOfPayment = req.file ? req.file.filename : null; // Get the uploaded file (if exists)
 
   // Add console logs for debugging
   console.log('Reference:', reference);
   console.log('Email:', email);
   console.log('Course:', course);
+  console.log('Amount Paid:', amountPaid);
   console.log('Proof of Payment:', proofOfPayment);
 
-  // Validation logic (ensure reference is not empty)
-  if (!reference || reference.trim() === "") {
-    return res.status(400).json({ success: false, message: 'Payment reference is required.' });
+  // Validation logic (ensure reference and amountPaid are not empty)
+  if (!reference || reference.trim() === "" || !amountPaid || isNaN(amountPaid)) {
+    return res.status(400).json({ success: false, message: 'Payment reference and valid amount are required.' });
   }
 
   // Insert EFT payment details into the database
-  const sql = `UPDATE registrations SET paymentStatus = 'pending-verification', paymentReference = ?, proofOfPayment = ? WHERE email = ? AND course = ?`;
+  const sql = `
+      INSERT INTO payments (email, course, paymentReference, amountPaid, proofOfPayment, paymentStatus)
+      VALUES (?, ?, ?, ?, ?, 'pending-verification')
+  `;
 
-  connection.query(sql, [reference, proofOfPayment, email, course], (err, result) => {
+  connection.query(sql, [email, course, reference, amountPaid, proofOfPayment], (err, result) => {
     if (err) {
-      console.error('Error updating payment:', err);
+      console.error('Error saving payment:', err);
       return res.status(500).json({ success: false, message: 'Error saving payment information.' });
     }
 

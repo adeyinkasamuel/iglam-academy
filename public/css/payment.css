@@ -17,9 +17,10 @@ body {
     color: #333;
 }
 
+/* Increase the width of the container */
 .container {
-    width: 100%;
-    max-width: 450px;
+    width: 90%; /* Make it 90% of the viewport width */
+    max-width: 1000px; /* Allow it to expand up to 1000px */
     background: #f0f8ff;
     border: 2px solid #1e90ff;
     border-radius: 15px;
@@ -83,7 +84,67 @@ h1 {
     color: #444;
 }
 
-/* EFT Payment Info */
+/* Horizontally align payment options with improved spacing */
+.glow-card form {
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    align-items: center;
+    gap: 30px; /* Add space between each option */
+    flex-wrap: wrap; /* Allows wrapping for smaller screens */
+    margin-top: 20px; /* Add margin above the form */
+}
+
+/* Ensure checkboxes and labels are inline and aligned */
+.glow-card form label {
+    margin-left: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Space between checkbox and label */
+.glow-card form input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Payment Option Group Styling for Wrapping Text */
+.payment-option-group {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    flex-direction: column; /* Align checkbox and text vertically */
+    text-align: center; /* Center-align the text */
+    white-space: pre-wrap; /* Ensure text wraps to new lines as needed */
+    max-width: 150px; /* Limit width to force line breaks */
+}
+
+/* Ensure checkbox and text stay together */
+.payment-option-group input[type="checkbox"] {
+    margin-bottom: 5px; /* Add space below the checkbox */
+}
+
+/* Adjust form container for proper alignment */
+.glow-card form {
+    display: flex;
+    justify-content: space-around; /* Space out the payment options evenly */
+    align-items: flex-start; /* Align items at the top */
+    flex-wrap: wrap; /* Allows wrapping for smaller screens */
+    margin-top: 20px; /* Add margin above the form */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .glow-card form {
+        flex-direction: column; /* Stack vertically on small screens */
+    }
+    
+    .payment-option-group {
+        margin-top: 10px;
+        max-width: 100%; /* Allow full width on smaller screens */
+    }
+}
+
+
+
 ul {
     list-style-type: none;
     padding: 0;
@@ -138,7 +199,6 @@ form input[type="file"] {
     font-size: 14px;
 }
 
-
 .payment-button {
     background: linear-gradient(135deg, #1e90ff, #00bfff);
     border: none;
@@ -190,6 +250,11 @@ form input[type="file"] {
 
     .logo {
         width: 60px;
+    }
+
+    /* Adjust flex direction for smaller screens */
+    .glow-card form {
+        flex-direction: column; /* Stack vertically for small screens */
     }
 }
 
