@@ -13,11 +13,10 @@ selectedCourses.forEach(course => {
     }
 });
 
-// Set values in HTML elements
+// Set initial values in HTML elements
 document.getElementById('selectedCourses').textContent = selectedCourses.map(course => course.course).join(', ');
-document.getElementById('totalFeeDisplay').textContent = totalFee.toFixed(2);
-document.getElementById('originalTotalDisplay').textContent = originalTotal.toFixed(2);
-document.getElementById('registrationFee').textContent = registrationFee.toFixed(2);
+document.getElementById('originalTotalDisplay').textContent = `ZAR ${originalTotal.toFixed(2)}`;
+document.getElementById('registrationFee').textContent = `ZAR ${registrationFee.toFixed(2)}`;
 
 // Initialize selected payment option
 let selectedPaymentOption = '';
@@ -28,70 +27,41 @@ function handleCheckboxChange() {
     const partialPayment = document.getElementById('partialPaymentCheckbox').checked;
     const registrationOnly = document.getElementById('registrationOnlyCheckbox').checked;
 
+    let finalFee = 0; // To store the calculated total based on payment selection
+
     // Only allow one payment option to be selected at a time
     if (fullPayment) {
         document.getElementById('partialPaymentCheckbox').checked = false;
         document.getElementById('registrationOnlyCheckbox').checked = false;
         selectedPaymentOption = 'full';
+        finalFee = totalFee + registrationFee; // Full payment is total fee + registration fee
         document.getElementById('payButton').textContent = "Proceed with Full Payment";
     } else if (partialPayment) {
         document.getElementById('fullPaymentCheckbox').checked = false;
         document.getElementById('registrationOnlyCheckbox').checked = false;
         selectedPaymentOption = 'partial';
+        finalFee = (totalFee * 0.5) + registrationFee; // Partial payment is 50% of total fee + registration fee
         document.getElementById('payButton').textContent = "Proceed with Partial Payment";
     } else if (registrationOnly) {
         document.getElementById('fullPaymentCheckbox').checked = false;
         document.getElementById('partialPaymentCheckbox').checked = false;
         selectedPaymentOption = 'registration';
+        finalFee = registrationFee; // Registration only is just the registration fee
         document.getElementById('payButton').textContent = "Proceed with Registration Fee Payment";
     } else {
         selectedPaymentOption = '';
         document.getElementById('payButton').textContent = "Pay Now";
+        finalFee = 0;
     }
+
+    // Update the "Amount Paid" input field with the calculated fee
+    document.getElementById('amountPaid').value = `ZAR ${finalFee.toFixed(2)}`;
 
     console.log('Selected Payment Option:', selectedPaymentOption); // Log selected payment option
+    console.log('Final Fee:', finalFee); // Log the calculated final fee for debugging
 }
 
-// Handle the payment process
-function handlePayment() {
-    if (!selectedPaymentOption) {
-        displayMessage('Please select a payment option.');
-        return;
-    }
-
-    let paymentAmount = 0;
-    if (selectedPaymentOption === 'full') {
-        paymentAmount = parseFloat(totalFee) + parseFloat(registrationFee);
-    } else if (selectedPaymentOption === 'partial') {
-        paymentAmount = parseFloat(totalFee) * 0.5 + parseFloat(registrationFee);
-    } else if (selectedPaymentOption === 'registration') {
-        paymentAmount = parseFloat(registrationFee);
-    }
-
-    console.log('Payment Amount:', paymentAmount); // Log the payment amount for debugging
-    processEFTPayment(paymentAmount);
-}
-
-// Simulate EFT payment process by showing banking details
-function processEFTPayment(amount) {
-    const message = `
-        Thank you for choosing to pay via EFT. Please use the following details to complete your payment:
-
-        - Amount to pay: R${amount.toFixed(2)}
-        - Account Name: iGlam Beauty Lounge
-        - Account Number: 63112320667
-        - Bank: FNB
-        - Branch Code: 250655
-
-        Please upload proof of payment when ready.
-    `;
-    displayMessage(message);
-
-    // Show payment reference form for user to upload proof
-    document.getElementById('paymentDetails').style.display = 'block';
-}
-
-// Function for handling form submission using Fetch API
+// Handle the payment submission without file upload
 function handlePaymentSubmission(event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -101,43 +71,19 @@ function handlePaymentSubmission(event) {
         const form = document.getElementById('paymentForm');
         const formData = new FormData(form);
 
-        console.log('Form Data:', formData); // Log FormData for debugging
-
-        // Submit the form using Fetch API
         fetch('http://127.0.0.1:3000/api/payment/submit-eft-payment', {
             method: 'POST',
             body: formData
         })
-        .then(response => {
-            // Log the full response to check its content
-            console.log('Full fetch response:', response);
-            
-            if (!response.ok) {
-                // Log status and statusText to understand why it failed
-                console.log('Fetch failed with status:', response.status, response.statusText);
-                throw new Error('Network response was not ok');
-            }
-
-            // Log the response type (to ensure it is JSON)
-            console.log('Fetch response type:', response.headers.get('content-type'));
-
-            return response.json(); // Ensure this is the correct response type
-        })
+        .then(response => response.json())
         .then(data => {
-            // Log the parsed response data
-            console.log('Data received:', data);
-
-            // Check for success and trigger redirection
             if (data.success) {
-                console.log('Redirection logic triggered');
-                window.location.href = 'registration-successful.html'; // Redirect immediately
+                window.location.href = 'registration-successful.html'; 
             } else {
                 displayMessage('Error: ' + data.message);
             }
         })
         .catch(error => {
-            // Log any errors that occur during the fetch process
-            console.log('Error occurred during fetch:', error); 
             displayMessage('Error submitting payment details: ' + error.message);
         });
     } else {
@@ -145,13 +91,12 @@ function handlePaymentSubmission(event) {
     }
 }
 
-// Function to display messages to the user
+// Function to display messages
 function displayMessage(message) {
     const alertMessage = document.getElementById('alertMessage');
     alertMessage.style.display = 'block';
     alertMessage.textContent = message;
 
-    // Hide the message after 5 seconds
     setTimeout(() => {
         alertMessage.style.display = 'none';
     }, 5000);

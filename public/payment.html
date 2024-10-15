@@ -28,59 +28,53 @@
 
         <h1>Complete Your Payment via EFT</h1>
 
-<!-- Glowing Card for Selected Courses Section -->
-<div class="glow-card">
-    <div class="summary">
-        <p>Selected Courses: <span id="selectedCourses"></span></p>
-        <p>Registration Fee: R<span id="registrationFee">250</span> (Compulsory)</p>
-        <p class="strikethrough">Original Total Fee: R<span id="originalTotalDisplay">3500</span></p>
-        <p>Special Course Fee: R<span id="totalFeeDisplay">0</span></p>
-    </div>
-</div>
-
-<!-- Payment Options -->
-<div class="glow-card">
-    <h3>Choose Your Payment Option:</h3>
-    <form>
-        <div class="payment-option-group">
-            <input type="checkbox" id="fullPaymentCheckbox" onchange="handleCheckboxChange()">
-            <label for="fullPaymentCheckbox">Full Payment (Registration Fee + Course Fee)</label>
+        <!-- Glowing Card for Selected Courses Section -->
+        <div class="glow-card">
+            <div class="summary">
+                <p>Selected Courses: <span id="selectedCourses"></span></p>
+                <p>Registration Fee: R<span id="registrationFee">250</span> (Compulsory)</p>
+                <p class="strikethrough">Original Total Fee: R<span id="originalTotalDisplay">3500</span></p>
+                <p>Special Course Fee: R<span id="totalFeeDisplay">0</span></p>
+            </div>
         </div>
 
-        <div class="payment-option-group">
-            <input type="checkbox" id="partialPaymentCheckbox" onchange="handleCheckboxChange()">
-            <label for="partialPaymentCheckbox">Partial Payment (50% of Course Fee + Registration Fee)</label>
+        <!-- Payment Options -->
+        <div class="glow-card">
+            <h3>Choose Your Payment Option:</h3>
+            <form>
+                <div class="payment-option-group">
+                    <input type="checkbox" id="fullPaymentCheckbox" onchange="handleCheckboxChange()">
+                    <label for="fullPaymentCheckbox">Full Payment (Registration Fee + Course Fee)</label>
+                </div>
+
+                <div class="payment-option-group">
+                    <input type="checkbox" id="partialPaymentCheckbox" onchange="handleCheckboxChange()">
+                    <label for="partialPaymentCheckbox">Partial Payment (50% of Course Fee + Registration Fee)</label>
+                </div>
+
+                <div class="payment-option-group">
+                    <input type="checkbox" id="registrationOnlyCheckbox" onchange="handleCheckboxChange()">
+                    <label for="registrationOnlyCheckbox">Registration Fee Only</label>
+                </div>
+            </form>
         </div>
-
-        <div class="payment-option-group">
-            <input type="checkbox" id="registrationOnlyCheckbox" onchange="handleCheckboxChange()">
-            <label for="registrationOnlyCheckbox">Registration Fee Only</label>
-        </div>
-    </form>
-</div>
-
-
 
         <!-- Payment Reference Form -->
-<div class="glow-card">
-    <form id="paymentForm" method="POST" enctype="multipart/form-data" onsubmit="handlePaymentSubmission(event)">
-        <!-- Hidden fields for email and course -->
-        <input type="hidden" id="email" name="email" value="user@example.com"> <!-- Replace with dynamic data -->
-        <input type="hidden" id="course" name="course" value="Nail Tech"> <!-- Replace with dynamic data -->
+        <div class="glow-card">
+            <form id="paymentForm" method="POST" onsubmit="handlePaymentSubmission(event)">
+                <!-- Hidden fields for email and course -->
+                <input type="hidden" id="email" name="email" value="user@example.com"> <!-- Replace with dynamic data -->
+                <input type="hidden" id="course" name="course" value="Nail Tech"> <!-- Replace with dynamic data -->
 
-        <label for="reference">Your Payment Reference Number:</label>
-        <input type="text" id="reference" name="reference" required>
+                <label for="reference">Your Payment Reference Number:</label>
+                <input type="text" id="reference" name="reference" required>
 
-        <label for="amountPaid">Amount Paid:</label>
-        <input type="text" id="amountPaid" name="amountPaid" required>
+                <label for="amountPaid">Amount Paid:</label>
+                <input type="text" id="amountPaid" name="amountPaid" required>
 
-        <label for="proof">Upload Proof of Payment (optional):</label>
-        <input type="file" id="proof" name="proof">
-
-        <button type="submit" id="payButton" class="payment-button">Submit Payment Details</button>
-    </form>
-</div>
-
+                <button type="submit" id="payButton" class="payment-button">Submit Payment Details</button>
+            </form>
+        </div>
 
         <div class="contact-info">
             <p>If you have any questions, please contact us at <a href="mailto:info@iglam.co.za">info@iglam.co.za</a>.</p>
