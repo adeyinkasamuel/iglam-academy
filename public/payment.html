@@ -61,10 +61,10 @@
 
         <!-- Payment Reference Form -->
         <div class="glow-card">
-            <form id="paymentForm" method="POST" onsubmit="handlePaymentSubmission(event)">
+            <form id="paymentForm" method="POST" action="/api/payment/submit-eft-payment">
                 <!-- Hidden fields for email and course -->
                 <input type="hidden" id="email" name="email" value="user@example.com"> <!-- Replace with dynamic data -->
-                <input type="hidden" id="course" name="course" value="Nail Tech"> <!-- Replace with dynamic data -->
+                <input type="hidden" id="course" name="course_id" value="1"> <!-- Use dynamic course_id -->
 
                 <label for="reference">Your Payment Reference Number:</label>
                 <input type="text" id="reference" name="reference" required>

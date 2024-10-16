@@ -54,40 +54,67 @@ function handleCheckboxChange() {
         finalFee = 0;
     }
 
-    // Update the "Amount Paid" input field with the calculated fee
-    document.getElementById('amountPaid').value = `ZAR ${finalFee.toFixed(2)}`;
+    // Update the "Amount Paid" input field with the calculated fee (without ZAR)
+    document.getElementById('amountPaid').value = finalFee.toFixed(2);
 
     console.log('Selected Payment Option:', selectedPaymentOption); // Log selected payment option
     console.log('Final Fee:', finalFee); // Log the calculated final fee for debugging
 }
 
-// Handle the payment submission without file upload
+// Attach event listener for form submission
+document.getElementById('paymentForm').addEventListener('submit', handlePaymentSubmission);
+
+// Handle the payment submission
 function handlePaymentSubmission(event) {
     event.preventDefault(); // Prevent default form submission
 
-    if (selectedPaymentOption) {
+    // Fetch form field values directly
+    const reference = document.getElementById('reference').value.trim();
+    const amountPaid = parseFloat(document.getElementById('amountPaid').value.trim()); // Ensure it's a number
+    const email = document.getElementById('email').value.trim();
+    const course = document.getElementById('course').value.trim();
+
+    // Log form data for debugging
+    console.log(`Form Submitted. Reference: ${reference}, Amount: ${amountPaid}, Email: ${email}, Course: ${course}`);
+
+    if (selectedPaymentOption && reference && !isNaN(amountPaid)) {
         displayMessage('Submitting your payment details. Please wait...');
 
-        const form = document.getElementById('paymentForm');
-        const formData = new FormData(form);
+        // Manually create form data
+        const formData = new URLSearchParams(); // Use URLSearchParams to properly format the data
+        formData.append('reference', reference);
+        formData.append('amountPaid', amountPaid); // Ensure it's a number
+        formData.append('email', email);
+        formData.append('course', course);
 
         fetch('http://127.0.0.1:3000/api/payment/submit-eft-payment', {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded' // Proper content-type for form data
+            },
+            body: formData.toString() // Convert formData to query string
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log('Response status:', response.status);
+            return response.json();
+        })
         .then(data => {
+            console.log('Server response:', data); // Log the server response
+
             if (data.success) {
+                console.log('Redirection to success page triggered.');
+                localStorage.setItem('totalPaid', amountPaid); // Store amountPaid in localStorage
                 window.location.href = 'registration-successful.html'; 
             } else {
                 displayMessage('Error: ' + data.message);
             }
         })
         .catch(error => {
+            console.error('Error in submission:', error); // Log fetch error
             displayMessage('Error submitting payment details: ' + error.message);
         });
     } else {
-        displayMessage('Please select a payment option before submitting the form.');
+        displayMessage('Please complete all fields before submitting the form.');
     }
 }
 

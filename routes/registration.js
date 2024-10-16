@@ -20,37 +20,52 @@ router.post('/submit-registration', (req, res) => {
     // Validation logic...
     if (!name || !name.trim() || !email || !email.trim() || !phone || !phone.trim() || !course || !course.trim() || !start_date || !start_date.trim() || !schedule_type || !schedule_type.trim()) {
         console.log('Validation Failed: Missing Required Fields');
-        return res.status(400).send('All required fields must be filled.');
+        return res.status(400).json({ success: false, message: 'All required fields must be filled.' });
     }
 
     const nameRegex = /^[a-zA-Z\s]{2,50}$/;
     if (!nameRegex.test(name)) {
-        return res.status(400).send('Name must be between 2 and 50 characters and contain only letters and spaces.');
+        return res.status(400).json({ success: false, message: 'Name must be between 2 and 50 characters and contain only letters and spaces.' });
     }
 
     const isValidEmail = validator.isEmail(email);
     if (!isValidEmail) {
-        return res.status(400).send('Invalid email format.');
+        return res.status(400).json({ success: false, message: 'Invalid email format.' });
     }
 
     const phoneRegex = /^[0-9]{10,15}$/;
     if (!phoneRegex.test(phone)) {
-        return res.status(400).send('Phone number must be between 10 and 15 digits and contain only numbers.');
+        return res.status(400).json({ success: false, message: 'Phone number must be between 10 and 15 digits and contain only numbers.' });
     }
 
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     const inputDate = new Date(start_date);
     const today = new Date();
     if (!dateRegex.test(start_date) || inputDate <= today) {
-        return res.status(400).send('Start date must be in the future and in YYYY-MM-DD format.');
+        return res.status(400).json({ success: false, message: 'Start date must be in the future and in YYYY-MM-DD format.' });
     }
 
     if (!courseDetails[course]) {
-        return res.status(400).send('Selected course is not valid.');
+        return res.status(400).json({ success: false, message: 'Selected course is not valid.' });
     }
 
     // Extract course details
     const { course_id, registration_fee, total_fee } = courseDetails[course];
+
+    // Log the data being inserted for debugging
+    console.log('Inserting Data:', {
+        name,
+        email,
+        phone,
+        address,
+        course,
+        start_date,
+        schedule_type,
+        additional_info,
+        course_id,
+        registration_fee,
+        total_fee
+    });
 
     // Insert into DB, including course_id, registration_fee, and total_fee
     const sql = `
@@ -61,9 +76,10 @@ router.post('/submit-registration', (req, res) => {
     connection.query(sql, [name, email, phone, address, course, start_date, schedule_type, additional_info, course_id, registration_fee, total_fee], (err, result) => {
         if (err) {
             console.error('Error inserting data:', err);
-            return res.status(500).send('Error saving registration data');
+            return res.status(500).json({ success: false, message: 'Error saving registration data' });
         }
-        res.status(200).send('Registration submitted successfully');
+        console.log('Registration saved successfully:', result);
+        res.status(200).json({ success: true, message: 'Registration submitted successfully' });
     });
 });
 
