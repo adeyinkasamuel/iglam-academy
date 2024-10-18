@@ -26,45 +26,71 @@
         <!-- Message alert box for displaying messages to the user -->
         <div id="alertMessage" class="alert-message" style="display: none; color: red; margin: 10px 0;"></div>
 
-        <h1>Complete Your Payment via EFT</h1>
+        <h1>Complete Registration via EFT Payment</h1>
 
         <!-- Glowing Card for Selected Courses Section -->
+<div class="glow-card">
+    <div class="summary">
+        <p>Selected Courses: <span id="selectedCourses"></span></p>
+        <p class="strikethrough">Original Total Fee: R<span id="originalTotalDisplay">3500</span></p>
+        <strong><p>Registration Fee: R<span id="registrationFee">250</span> (Compulsory)</p></strong>
+        <strong><p>Special Course Fee: R<span id="totalFeeDisplay">0</span></p></strong>
+    </div>
+</div>
+
+<!-- Glowing Card for Instructions on How to Complete Registration -->
+<div class="glow-card" style="padding: 20px; text-align: center;">
+    <h3 style="font-size: 1.5rem; margin-bottom: 10px;">How to Complete Your Registration</h3>
+    <p style="font-size: 1rem; margin-bottom: 15px;">Follow these steps to complete your registration via EFT:</p>
+    <ol style="list-style-position: inside; text-align: left; display: inline-block; line-height: 1.8; font-size: 1rem; padding-left: 0;">
+        <li>Make your payment via EFT using the provided banking details.</li>
+        <li>Return to this page after the payment is made.</li>
+        <li>Enter your payment reference number and the amount you paid.</li>
+        <li>Click "Proceed with Payment" to complete your registration.</li>
+    </ol>
+</div>
+
+
+        <!-- Glowing Card for EFT Banking Details -->
         <div class="glow-card">
-            <div class="summary">
-                <p>Selected Courses: <span id="selectedCourses"></span></p>
-                <p>Registration Fee: R<span id="registrationFee">250</span> (Compulsory)</p>
-                <p class="strikethrough">Original Total Fee: R<span id="originalTotalDisplay">3500</span></p>
-                <p>Special Course Fee: R<span id="totalFeeDisplay">0</span></p>
-            </div>
+            <h3>EFT Banking Details</h3>
+            <p>Account Number: 63112320667</p>
+            <p>Account Name: iGlam Beauty Lounge</p>
+            <p>Bank Name: FNB</p>
+        </div>
+<!-- Payment Options -->
+<div class="glow-card">
+    <h3>Choose Your Payment Option:</h3>
+    <form>
+        <div class="payment-option-group">
+            <input type="checkbox" id="fullPaymentCheckbox" onchange="handleCheckboxChange()">
+            <label for="fullPaymentCheckbox">Full Payment (Registration Fee + Course Fee)</label>
         </div>
 
-        <!-- Payment Options -->
-        <div class="glow-card">
-            <h3>Choose Your Payment Option:</h3>
-            <form>
-                <div class="payment-option-group">
-                    <input type="checkbox" id="fullPaymentCheckbox" onchange="handleCheckboxChange()">
-                    <label for="fullPaymentCheckbox">Full Payment (Registration Fee + Course Fee)</label>
-                </div>
-
-                <div class="payment-option-group">
-                    <input type="checkbox" id="partialPaymentCheckbox" onchange="handleCheckboxChange()">
-                    <label for="partialPaymentCheckbox">Partial Payment (50% of Course Fee + Registration Fee)</label>
-                </div>
-
-                <div class="payment-option-group">
-                    <input type="checkbox" id="registrationOnlyCheckbox" onchange="handleCheckboxChange()">
-                    <label for="registrationOnlyCheckbox">Registration Fee Only</label>
-                </div>
-            </form>
+        <div class="payment-option-group">
+            <input type="checkbox" id="partialPaymentCheckbox" onchange="handleCheckboxChange()">
+            <label for="partialPaymentCheckbox">Partial Payment (50% of Course Fee + Registration Fee)</label>
         </div>
+
+        <div class="payment-option-group">
+            <input type="checkbox" id="registrationOnlyCheckbox" onchange="handleCheckboxChange()">
+            <label for="registrationOnlyCheckbox">Registration Fee Only</label>
+        </div>
+    </form>
+</div>
 
         <!-- Payment Reference Form -->
         <div class="glow-card">
             <form id="paymentForm" method="POST" action="/api/payment/submit-eft-payment">
-                <!-- Hidden fields for email and course -->
-                <input type="hidden" id="email" name="email" value="user@example.com"> <!-- Replace with dynamic data -->
-                <input type="hidden" id="course" name="course_id" value="1"> <!-- Use dynamic course_id -->
+                <!-- Hidden fields for email, course, and additional user details -->
+                <input type="hidden" id="email" name="email" value=""> <!-- Email from localStorage -->
+                <input type="hidden" id="course" name="course" value=""> <!-- Course from localStorage -->
+                <input type="hidden" id="firstName" name="firstName" value=""> <!-- First name from localStorage -->
+                <input type="hidden" id="lastName" name="lastName" value=""> <!-- Last name from localStorage -->
+                <input type="hidden" id="program" name="program" value=""> <!-- Program from localStorage -->
+                <input type="hidden" id="startDate" name="startDate" value=""> <!-- Start date from localStorage -->
+                <input type="hidden" id="location" name="location" value=""> <!-- Location from localStorage -->
+                <input type="hidden" id="registrationFee" name="registrationFee" value=""> <!-- Registration fee from localStorage -->
 
                 <label for="reference">Your Payment Reference Number:</label>
                 <input type="text" id="reference" name="reference" required>

@@ -14,8 +14,14 @@ const courseDetails = {
 
 // Handle registration form submissions
 router.post('/submit-registration', (req, res) => {
+    // Log the raw incoming request body to check what data is being received
+    console.log('Data Received from Frontend:', req.body);
+
     const sanitizedData = sanitizeRequestData(req.body);
     const { name, email, phone, address, course, start_date, schedule_type, additional_info } = sanitizedData;
+
+    // Log sanitized data to ensure the data is cleaned properly
+    console.log('Sanitized Data:', { name, email, phone, address, course, start_date, schedule_type, additional_info });
 
     // Validation logic...
     if (!name || !name.trim() || !email || !email.trim() || !phone || !phone.trim() || !course || !course.trim() || !start_date || !start_date.trim() || !schedule_type || !schedule_type.trim()) {

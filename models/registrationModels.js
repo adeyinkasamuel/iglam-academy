@@ -4,12 +4,21 @@ const connection = require('../db'); // Database connection
 const createRegistration = (data, callback) => {
     const sql = `
         INSERT INTO registrations 
-        (name, email, phone, address, course, start_date, schedule_type, paymentStatus, additional_info, created_at) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?, NOW())
+        (name, email, phone, address, course, start_date, schedule_type, paymentStatus, additional_info, course_id, registration_fee, total_fee, created_at) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?, ?, NOW())
     `;
     const params = [
-        data.name, data.email, data.phone, data.address, 
-        data.course, data.start_date, data.schedule_type, data.additional_info
+        data.name, 
+        data.email, 
+        data.phone, 
+        data.address, 
+        data.course, 
+        data.start_date, 
+        data.schedule_type, 
+        data.additional_info, 
+        data.course_id, 
+        data.registration_fee, 
+        data.total_fee
     ];
 
     connection.query(sql, params, (err, result) => {

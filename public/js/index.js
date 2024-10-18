@@ -1,3 +1,5 @@
+// Clear localStorage at the start of the registration process
+localStorage.clear();
 const courseList = document.getElementById('courseList');
 const scrollIndicatorUp = document.getElementById('scrollIndicatorUp');
 const scrollIndicatorDown = document.getElementById('scrollIndicatorDown');
@@ -121,7 +123,7 @@ function updateSummary() {
     let totalFee = 0;
     let originalTotal = 0;
     let totalDuration = 0;
-    let registrationFee = 0;
+    let registrationFee = 250; // Always fixed at 250 for short courses
 
     const selectedCourses = [];
     const courseCheckboxes = document.querySelectorAll('.course');
@@ -131,68 +133,22 @@ function updateSummary() {
             const specialFee = parseInt(checkbox.getAttribute('data-special'));
             const regFee = parseInt(checkbox.getAttribute('data-regfee'));
             originalTotal += originalFee;
-            totalFee += specialFee ? specialFee : originalFee;
+
+            // For short courses, fee is always 1000, regardless of the course data.
+            const courseType = checkbox.getAttribute('data-course-type');
+            if (courseType === 'short') {
+                totalFee += 1000; // Short courses are always R1000 each
+            } else {
+                totalFee += specialFee ? specialFee : originalFee; // Non-short courses use original or special fee
+            }
+
             selectedCourses.push({
                 fee: specialFee ? specialFee : originalFee,
                 regFee: regFee,
                 course: checkbox.getAttribute('data-course')
             });
+
             totalDuration += parseInt(checkbox.getAttribute('data-duration'));
-        }
-    });
-
-    // Logic for short courses
-    const shortCourseCount = selectedCourses.filter(course => course.regFee === 250).length;
-
-    if (shortCourseCount === 1) {
-        totalFee = 1000;
-        registrationFee = 250;
-    } else if (shortCourseCount === 2) {
-        totalFee = 1500;
-        registrationFee = 250;
-    } else if (shortCourseCount === 3) {
-        totalFee = 1500 + 1000;
-        registrationFee = 500;
-    } else if (shortCourseCount === 4) {
-        totalFee = 1500 + 1500;
-        registrationFee = 500;
-    } else if (shortCourseCount > 4) {
-        let blocksOfTwoCourses = Math.floor(shortCourseCount / 2);
-        let remainingCourses = shortCourseCount % 2;
-        totalFee = blocksOfTwoCourses * 1500;
-        registrationFee = blocksOfTwoCourses * 250;
-
-        if (remainingCourses === 1) {
-            totalFee += 1000;
-            registrationFee += 250;
-        }
-    }
-
-    // Logic for non-short courses
-    selectedCourses.forEach(course => {
-        switch (course.course) {
-            case "Full Beauty Therapy":
-                registrationFee += 700;
-                break;
-            case "Microblading":
-                registrationFee += 500;
-                break;
-            case "Ombre":
-                registrationFee += 1000;
-                break;
-            case "Combo of Microblading and Ombre":
-                totalFee += 5500;
-                registrationFee += 1500;
-                break;
-            case "Piercings":
-                registrationFee += 800;
-                break;
-            case "Tattoo":
-                registrationFee += 2000;
-                break;
-            default:
-                // Short courses already handled
-                break;
         }
     });
 
@@ -200,7 +156,7 @@ function updateSummary() {
     originalTotalElement.textContent = originalTotal;
     totalFeeElement.textContent = totalFee;
     totalDurationElement.textContent = totalDuration;
-    registrationFeeElement.textContent = registrationFee;
+    registrationFeeElement.textContent = registrationFee; // Always 250 for short courses
 
     if (totalFee > 0) {
         totalFeeError.style.display = 'none';

@@ -15,20 +15,25 @@
     <div class="container">
         <img src="img/8.png" alt="iGlam Academy Logo">
         <h1>Choose Your Program</h1>
+    
+        <!-- New Button for Workshop -->
+        <div class="option" id="workshop" onclick="selectOption('workshop')">Pretoria, Rustenburg and Giyani Workshop</div>
+    
         <div class="option" id="fullTime" onclick="selectOption('fullTime')">Full Time (9am - 3pm)</div>
         <div class="option" id="partTime" onclick="selectOption('partTime')">Part Time (9am - 3pm, Weekend Included)</div>
-
+    
         <div class="error-message" id="programError">Please select a program.</div>
-
-        <input type="text" id="startDate" class="date-picker" placeholder="Select Your Course Start Date">
-
+    
+        <input type="text" id="startDate" class="date-picker" placeholder="Select Your Course Start Date" style="display: none;">
+    
         <div class="error-message" id="dateError">Please select a start date.</div>
-
+    
         <div class="btn-container">
             <button type="button" class="back-button" onclick="goBack()">Back</button>
             <button type="button" onclick="validateAndNext()">Next</button>
         </div>
     </div>
+    
 
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

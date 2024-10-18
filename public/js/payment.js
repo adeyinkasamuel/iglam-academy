@@ -1,64 +1,88 @@
 // JavaScript for handling payment options and processing payments
 
-// Retrieve data from local storage to display dynamic values
+// Retrieve data from localStorage to display dynamic values
 const selectedCourses = JSON.parse(localStorage.getItem('selectedCourses')) || [];
 const originalTotal = parseFloat(localStorage.getItem('originalTotal')) || 0;
-const totalFee = parseFloat(localStorage.getItem('totalFee')) || 0;
+const totalFee = parseFloat(localStorage.getItem('totalFee')) || 0; // Ensure totalFee is properly retrieved
+const basicInfo = JSON.parse(localStorage.getItem('basicInfo')) || {}; // Get basic info (name, email)
+const programInfo = JSON.parse(localStorage.getItem('programInfo')) || {}; // Get program info (program and start date)
+const selectedLocation = localStorage.getItem('selectedLocation') || ''; // Get location
 
-// Calculate total registration fee
-let registrationFee = 0;
-selectedCourses.forEach(course => {
-    if (course.course !== 'Test Course') {
-        registrationFee += parseInt(course.regfee); 
-    }
-});
+// Calculate total registration fee (flat fee of 250)
+let registrationFee = 250; // Flat fee
 
 // Set initial values in HTML elements
 document.getElementById('selectedCourses').textContent = selectedCourses.map(course => course.course).join(', ');
 document.getElementById('originalTotalDisplay').textContent = `ZAR ${originalTotal.toFixed(2)}`;
-document.getElementById('registrationFee').textContent = `ZAR ${registrationFee.toFixed(2)}`;
+document.getElementById('totalFeeDisplay').textContent = `ZAR ${totalFee.toFixed(2)}`; // Display the special course fee
+document.getElementById('registrationFee').textContent = `ZAR ${registrationFee.toFixed(2)}`; // Flat registration fee
+
+// Pre-fill hidden fields with user info from localStorage
+document.getElementById('email').value = basicInfo.email || ''; 
+document.getElementById('course').value = selectedCourses[0] ? selectedCourses[0].course : ''; 
+document.getElementById('firstName').value = basicInfo.firstName || ''; 
+document.getElementById('lastName').value = basicInfo.lastName || ''; 
+document.getElementById('program').value = programInfo.program || ''; 
+document.getElementById('startDate').value = programInfo.startDate || ''; 
+document.getElementById('location').value = selectedLocation || ''; 
+document.getElementById('registrationFee').value = registrationFee.toFixed(2);
 
 // Initialize selected payment option
 let selectedPaymentOption = '';
 
 // Handle the change in payment options
 function handleCheckboxChange() {
-    const fullPayment = document.getElementById('fullPaymentCheckbox').checked;
-    const partialPayment = document.getElementById('partialPaymentCheckbox').checked;
-    const registrationOnly = document.getElementById('registrationOnlyCheckbox').checked;
+    // Uncheck all the checkboxes initially
+    const fullPayment = document.getElementById('fullPaymentCheckbox');
+    const partialPayment = document.getElementById('partialPaymentCheckbox');
+    const registrationOnly = document.getElementById('registrationOnlyCheckbox');
 
-    let finalFee = 0; // To store the calculated total based on payment selection
+    // Uncheck all others when one is selected
+    fullPayment.addEventListener('change', () => {
+        if (fullPayment.checked) {
+            partialPayment.checked = false;
+            registrationOnly.checked = false;
+            selectedPaymentOption = 'full';
+            updateFinalFee();
+        }
+    });
 
-    // Only allow one payment option to be selected at a time
-    if (fullPayment) {
-        document.getElementById('partialPaymentCheckbox').checked = false;
-        document.getElementById('registrationOnlyCheckbox').checked = false;
-        selectedPaymentOption = 'full';
-        finalFee = totalFee + registrationFee; // Full payment is total fee + registration fee
-        document.getElementById('payButton').textContent = "Proceed with Full Payment";
-    } else if (partialPayment) {
-        document.getElementById('fullPaymentCheckbox').checked = false;
-        document.getElementById('registrationOnlyCheckbox').checked = false;
-        selectedPaymentOption = 'partial';
-        finalFee = (totalFee * 0.5) + registrationFee; // Partial payment is 50% of total fee + registration fee
-        document.getElementById('payButton').textContent = "Proceed with Partial Payment";
-    } else if (registrationOnly) {
-        document.getElementById('fullPaymentCheckbox').checked = false;
-        document.getElementById('partialPaymentCheckbox').checked = false;
-        selectedPaymentOption = 'registration';
-        finalFee = registrationFee; // Registration only is just the registration fee
-        document.getElementById('payButton').textContent = "Proceed with Registration Fee Payment";
-    } else {
-        selectedPaymentOption = '';
-        document.getElementById('payButton').textContent = "Pay Now";
-        finalFee = 0;
+    partialPayment.addEventListener('change', () => {
+        if (partialPayment.checked) {
+            fullPayment.checked = false;
+            registrationOnly.checked = false;
+            selectedPaymentOption = 'partial';
+            updateFinalFee();
+        }
+    });
+
+    registrationOnly.addEventListener('change', () => {
+        if (registrationOnly.checked) {
+            fullPayment.checked = false;
+            partialPayment.checked = false;
+            selectedPaymentOption = 'registration';
+            updateFinalFee();
+        }
+    });
+
+    function updateFinalFee() {
+        let finalFee = 0;
+
+        if (selectedPaymentOption === 'full') {
+            finalFee = totalFee + registrationFee; // Full payment includes course fee + flat registration fee
+            document.getElementById('payButton').textContent = "Proceed with Full Payment";
+        } else if (selectedPaymentOption === 'partial') {
+            finalFee = (totalFee * 0.5) + registrationFee; // Partial payment is 50% of the course fee + flat registration fee
+            document.getElementById('payButton').textContent = "Proceed with Partial Payment";
+        } else if (selectedPaymentOption === 'registration') {
+            finalFee = registrationFee; // Only the registration fee for this option
+            document.getElementById('payButton').textContent = "Proceed with Registration Fee Payment";
+        }
+
+        document.getElementById('amountPaid').value = finalFee.toFixed(2);
+        console.log('Selected Payment Option:', selectedPaymentOption); 
+        console.log('Final Fee:', finalFee); 
     }
-
-    // Update the "Amount Paid" input field with the calculated fee (without ZAR)
-    document.getElementById('amountPaid').value = finalFee.toFixed(2);
-
-    console.log('Selected Payment Option:', selectedPaymentOption); // Log selected payment option
-    console.log('Final Fee:', finalFee); // Log the calculated final fee for debugging
 }
 
 // Attach event listener for form submission
@@ -66,51 +90,55 @@ document.getElementById('paymentForm').addEventListener('submit', handlePaymentS
 
 // Handle the payment submission
 function handlePaymentSubmission(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault(); 
 
     // Fetch form field values directly
     const reference = document.getElementById('reference').value.trim();
-    const amountPaid = parseFloat(document.getElementById('amountPaid').value.trim()); // Ensure it's a number
+    const amountPaid = parseFloat(document.getElementById('amountPaid').value.trim());
     const email = document.getElementById('email').value.trim();
     const course = document.getElementById('course').value.trim();
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
 
-    // Log form data for debugging
-    console.log(`Form Submitted. Reference: ${reference}, Amount: ${amountPaid}, Email: ${email}, Course: ${course}`);
+    console.log(`Form Submitted. Reference: ${reference}, Amount Paid: ${amountPaid}, Name: ${firstName} ${lastName}, Course: ${course}`);
 
-    if (selectedPaymentOption && reference && !isNaN(amountPaid)) {
+    if (reference && !isNaN(amountPaid)) {
         displayMessage('Submitting your payment details. Please wait...');
 
-        // Manually create form data
-        const formData = new URLSearchParams(); // Use URLSearchParams to properly format the data
+        const formData = new URLSearchParams(); 
         formData.append('reference', reference);
-        formData.append('amountPaid', amountPaid); // Ensure it's a number
+        formData.append('amountPaid', amountPaid);
         formData.append('email', email);
         formData.append('course', course);
+        formData.append('firstName', firstName);
+        formData.append('lastName', lastName);
+
+        // Store the email and totalPaid in localStorage for later use
+        localStorage.setItem('email', email);
+        localStorage.setItem('totalPaid', amountPaid);
 
         fetch('http://127.0.0.1:3000/api/payment/submit-eft-payment', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded' // Proper content-type for form data
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: formData.toString() // Convert formData to query string
+            body: formData.toString() 
         })
         .then(response => {
             console.log('Response status:', response.status);
             return response.json();
         })
         .then(data => {
-            console.log('Server response:', data); // Log the server response
+            console.log('Server response:', data);
 
             if (data.success) {
-                console.log('Redirection to success page triggered.');
-                localStorage.setItem('totalPaid', amountPaid); // Store amountPaid in localStorage
                 window.location.href = 'registration-successful.html'; 
             } else {
                 displayMessage('Error: ' + data.message);
             }
         })
         .catch(error => {
-            console.error('Error in submission:', error); // Log fetch error
+            console.error('Error in submission:', error);
             displayMessage('Error submitting payment details: ' + error.message);
         });
     } else {
@@ -128,3 +156,6 @@ function displayMessage(message) {
         alertMessage.style.display = 'none';
     }, 5000);
 }
+
+// Initialize the checkbox change handler
+handleCheckboxChange();
