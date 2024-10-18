@@ -53,17 +53,6 @@ location,
 registrationFee
 ];
 
-connection.query(sql, values, (err, result) => {
-if (err) {
-  console.error('Error saving payment:', err);
-  return res.status(500).json({ success: false, message: 'Error saving payment information.' });
-}
-
-console.log('Payment saved successfully:', result);
-res.status(200).json({ success: true, message: 'Payment details submitted successfully. Awaiting verification.' });
-});
-
-
   connection.query(sql, values, (err, result) => {
     if (err) {
       console.error('Error saving payment:', err);
